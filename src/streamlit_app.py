@@ -1,7 +1,6 @@
 import streamlit as st
 import joblib
 import pandas as pd
-import numpy as np
 import os
 DEFAULT_AGE = 30
 DEFAULT_FARE = 30.0
@@ -19,6 +18,11 @@ except FileNotFoundError:
 except Exception as e:
     st.error(f" ⚠️ Error loading the model: {e}")
     st.stop()
+def predict_survival(model_pipeline, input_df):
+    prediction = model_pipeline.predict(input_df)[0]
+    prediction_proba = model_pipeline.predict_proba(input_df)[0]
+    confidence = prediction_proba[prediction] * 100
+    return prediction, confidence
 st.title(" 🚢 Titanic Survival Predictor")
 st.markdown("---")
 st.write("Enter passenger details to predict survival on the Titanic.")
@@ -48,9 +52,7 @@ if submitted:
     st.markdown("---")
     st.subheader("🔍Prediction Result:")
     try:
-        prediction = model_pipeline.predict(input_data)[0]
-        prediction_proba = model_pipeline.predict_proba(input_data)[0]
-        confidence = prediction_proba[prediction] * 100
+        prediction, confidence = predict_survival(model_pipeline, input_data)
         if prediction == 1:
             st.success(f" 🎉 **Survived!** (Confidence: {confidence:.2f}%)")
             st.balloons()
