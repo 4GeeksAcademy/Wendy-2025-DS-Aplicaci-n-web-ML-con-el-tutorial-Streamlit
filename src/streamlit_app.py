@@ -14,7 +14,7 @@ try:
     st.success(" ✅ Machine Learning Model loaded successfully!")
 except FileNotFoundError:
     st.error(f"❌Error: Model file not found at `{model_path}`. Please ensure it is saved correctly.")
-    st.info("You might need to run the 'explore.ipynb' notebook to train and save the model first.")
+    st.info("You might need to run the training script to generate and save the model.")
     st.stop()
 except Exception as e:
     st.error(f" ⚠️ Error loading the model: {e}")
