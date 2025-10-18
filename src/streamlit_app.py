@@ -6,7 +6,7 @@ DEFAULT_AGE = 30
 DEFAULT_FARE = 30.0
 MAX_FARE = 1000.0
 MAX_RELATIVES = 6
-script_dir = os.path.dirname(__file__)
+script_dir = os.getcwd()
 model_path = os.path.join(script_dir, "models", "titanic_survival_predictor_pipeline.pkl")
 try:
     model_pipeline = joblib.load(model_path)
